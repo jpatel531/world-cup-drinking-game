@@ -5,9 +5,11 @@ require 'sinatra'
 # enable :sessions
 
 get '/' do 
-	main_page = Nokogiri::HTML(open('http://www.bbc.co.uk/sport/0/football/'))
+	@main_page = Nokogiri::HTML(open('http://www.bbc.co.uk/sport/0/football/'))
 
-	main_page.css('span.status.live').each do |status|
+	@live_matches = @main_page.css('span.status.live')
+
+	@live_matches.each do |status|
 		@doc = "http://www.bbc.co.uk" + status.parent.parent.attr('href')
 	end
 
@@ -27,7 +29,7 @@ get '/' do
 		end
 	end
 
-	@instruction = !main_page.css('span.status.live').nil? ? instruction : "No game on bro. Try later, yea?"
+	@instruction = !@live_matches.nil? ? instruction : "No game on bro. Try later, yea?"
 	erb :index
 end
 
