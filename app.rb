@@ -26,8 +26,8 @@ get '/' do
 			end
 		end
 	end
-	
-	@instruction = instruction
+
+	@instruction = !main_page.css('span.status.live').nil? ? instruction : "No game on bro. Try later, yea?"
 	erb :index
 end
 
