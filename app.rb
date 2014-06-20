@@ -24,6 +24,8 @@ get '/' do
 			elsif event.content.include?("Substitution" || "substitution" || "replaces")
 				return "Down a shot: #{event.content}"
 			elsif event.content.include?("yellow card" || "Booking" || "booking")
+				return "Down two shots: #{event.content}"
+			elsif event.content.include("foul" || "Foul")
 				return "Down a shot: #{event.content}"
 			elsif event.content.include?("begins" || "first half" || "kick off" || "Kick off")
 				return "Down two shots: #{event.content}"
