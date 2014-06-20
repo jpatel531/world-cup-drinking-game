@@ -13,7 +13,7 @@ get '/' do
 		@doc = "http://www.bbc.co.uk" + status.parent.parent.attr('href')
 	end
 
-	@match = Nokogiri::HTML(open(@doc))
+	@match = Nokogiri::HTML(open(@doc)) unless @doc.nil?
 
 	def instruction
 		@match.css('.event').each do |event|
@@ -29,7 +29,7 @@ get '/' do
 		end
 	end
 
-	@instruction = !@live_matches.nil? ? instruction : "No game on bro. Try later, yea?"
+	@instruction = !@match.nil? ? instruction : "No game on bro. Try later, yea?"
 	erb :index
 end
 
