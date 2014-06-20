@@ -3,13 +3,17 @@ require 'open-uri'
 require 'sinatra'
 
 get '/' do 
-	main_page = Nokogiri::HTML(open('http://www.bbc.co.uk/sport/0/football/'))
+	@main_page = Nokogiri::HTML(open('http://www.bbc.co.uk/sport/0/football/'))
 
-	main_page.css('span.status.live').each do |status|
+	@live_matches = @main_page.css('span.status.live')
+
+	@live_matches.each do |status|
 		@doc = "http://www.bbc.co.uk" + status.parent.parent.attr('href')
 	end
 
-	@match = Nokogiri::HTML(open(@doc))
+	@match = Nokogiri::HTML(open(@doc)) unless @doc.nil?
+
+	# EVENT = ["Goal", "goal", "Red card", "red card", "sent off", "sending off", "Dismissal", "dismissal", "second yellow card", "Second yellow card", "Substitution", "substitution", "replaces", "yellow card", "booking", "Booking"]
 
 	def instruction
 		@match.css('.event').each do |event|
@@ -21,12 +25,12 @@ get '/' do
 				return "Down a shot: #{event.content}"
 			elsif event.content.include?("yellow card" || "Booking" || "booking")
 				return "Down a shot: #{event.content}"
-			elsif event.content.include?("begins" || "kick off" || "Kick off")
+			elsif event.content.include?("begins" || "first half" || "kick off" || "Kick off")
 				return "Down two shots: #{event.content}"
 			end
 		end
 	end
-	
-	@instruction = instruction
+
+	@instruction = !@match.nil? ? instruction : "No game on bro. Try later, yea?"
 	erb :index
 end
