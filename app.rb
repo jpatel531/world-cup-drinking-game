@@ -21,13 +21,9 @@ get '/' do
 				return "Down four shots: #{event.content}"
 			elsif event.content.include?("Red card" || "red card" || "sent off" || "sending off" || "Dismissal" || "dismissal" || "second yellow card" || "Second yellow card")
 				return "Down three shots: #{event.content}"
-			elsif event.content.include?("Substitution" || "substitution" || "replaces")
+			elsif event.content.include?("Substitution" || "substitution" || "replaces" || "foul" || "Foul" || "Free kick" || "Free Kick" || "missed" || "miss")
 				return "Down a shot: #{event.content}"
-			elsif event.content.include?("yellow card" || "Booking" || "booking")
-				return "Down two shots: #{event.content}"
-			elsif event.content.include?("foul" || "Foul" || "Free kick" || "Free Kick" || "missed" || "miss")
-				return "Down a shot: #{event.content}"
-			elsif event.content.include?("begins" || "first half" || "kick off" || "Kick off")
+			elsif event.content.include?("yellow card" || "Booking" || "booking" || "begins" || "first half" || "kick off" || "Kick off")
 				return "Down two shots: #{event.content}"
 			end
 		end
