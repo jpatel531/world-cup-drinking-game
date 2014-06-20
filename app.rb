@@ -25,7 +25,7 @@ get '/' do
 				return "Down a shot: #{event.content}"
 			elsif event.content.include?("yellow card" || "Booking" || "booking")
 				return "Down two shots: #{event.content}"
-			elsif event.content.include?("foul" || "Foul")
+			elsif event.content.include?("foul" || "Foul" || "Free kick" || "Free Kick" || "missed" || "miss")
 				return "Down a shot: #{event.content}"
 			elsif event.content.include?("begins" || "first half" || "kick off" || "Kick off")
 				return "Down two shots: #{event.content}"
