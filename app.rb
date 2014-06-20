@@ -2,8 +2,6 @@ require 'nokogiri'
 require 'open-uri'
 require 'sinatra'
 
-# enable :sessions
-
 get '/' do 
 	main_page = Nokogiri::HTML(open('http://www.bbc.co.uk/sport/0/football/'))
 
@@ -23,6 +21,8 @@ get '/' do
 				return "Down a shot: #{event.content}"
 			elsif event.content.include?("yellow card" || "Booking" || "booking")
 				return "Down a shot: #{event.content}"
+			elsif event.content.include?("begins" || "kick off" || "Kick off")
+				return "Down two shots: #{event.content}"
 			end
 		end
 	end
@@ -30,11 +30,3 @@ get '/' do
 	@instruction = instruction
 	erb :index
 end
-
-# # puts event
-
-# get '/' do 
-# 	erb :index
-# end
-
-# puts instruction
