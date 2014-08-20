@@ -13,7 +13,6 @@ get '/' do
 
 	@match = Nokogiri::HTML(open(@doc)) unless @doc.nil?
 
-	# EVENT = ["Goal", "goal", "Red card", "red card", "sent off", "sending off", "Dismissal", "dismissal", "second yellow card", "Second yellow card", "Substitution", "substitution", "replaces", "yellow card", "booking", "Booking"]
 
 	def instruction
 		@match.css('.event').each do |event|
